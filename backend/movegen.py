@@ -1,0 +1,1 @@
+# Purpose: Generate legal moves as well as all special chess rules

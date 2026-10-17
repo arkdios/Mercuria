@@ -1,0 +1,1 @@
+/// Purpose: Coordinates the game, connects the board to the API, and updates the interface

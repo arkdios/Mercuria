@@ -1,0 +1,1 @@
+/// Purpose: Renders the chessboard, displays pieces, and handles square interactions

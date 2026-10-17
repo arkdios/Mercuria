@@ -1,0 +1,1 @@
+# Purpose: Give each position a 64-bit hash so the engine can recognize repeated positions

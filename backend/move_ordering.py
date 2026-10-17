@@ -1,0 +1,1 @@
+# Purpose: Search promising moves first, allowing the alpha-beta pruning to cut trivial branches

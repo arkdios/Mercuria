@@ -1,0 +1,1 @@
+# Purpose: Cache search results so the engine does not repeatedly solve the same position

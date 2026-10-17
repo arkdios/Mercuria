@@ -1,0 +1,1 @@
+# Purpose: Host the Python backend and expose the API for the JS frontend

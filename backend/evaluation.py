@@ -1,0 +1,1 @@
+# Purpose: Estimate how good a position is for the side to move aka. heuristics evaluation function
