@@ -1,1 +1,388 @@
 /*  Purpose: Control appearance + responsiveness of the website */
+
+:root {
+    --silver: #e7ebef; /* page background */
+    --panel: #f6f8fa; /* side panel background */
+    --ink: #16212b; /* main text and black pieces */
+    --ink-soft: #46566a; /* secondary text */
+    --line: #c3cdd6; /* thin borders */
+    --square-light: #dde4ea;
+    --square-dark: #7f95a8;
+    --signal: #2d5a9e; /* selection, move dots, keyboard focus */
+    --alarm: #bf3a30; /* check and errors */
+   
+    --board-size: min(94vw, 78vh, 640px);
+    --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+   
+* {
+    box-sizing: border-box;
+}
+   
+body {
+    margin: 0;
+    background: var(--silver);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    line-height: 1.45;
+}
+   
+/*  Header */
+.site-header {
+    padding: 1.25rem clamp(1rem, 4vw, 3rem) 0;
+}
+   
+.site-header h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+    font-weight: 700;
+}
+   
+.site-header p {
+    max-width: 60ch;
+    margin: 0.25rem 0 0;
+    color: var(--ink-soft);
+}
+   
+/*  Page layout */
+.game {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding: clamp(1rem, 3vw, 2.5rem);
+}
+   
+@media (min-width: 960px) {
+    .game {
+        grid-template-columns: auto minmax(20rem, 27rem);
+        justify-content: center;
+        align-items: start;
+    }
+}
+   
+/* The board */
+.board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: var(--board-size);
+    height: var(--board-size);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 0 0 2px var(--ink), 0 12px 32px rgba(52, 113, 170, 0.18);
+}
+   
+.square {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    cursor: pointer;
+    background: var(--square-light);
+    transition: background-color 0.15s;
+}
+   
+.square.dark {
+    background: var(--square-dark);
+}
+   
+/*  The previous move is tinted amber. */
+.square.is-last::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(228, 181, 63, 0.55);
+}
+   
+/*  The selected piece gets a blue frame. */
+.square.is-selected {
+    box-shadow: inset 0 0 0 4px var(--signal);
+}
+   
+/*  A dot marks an empty square the selected piece can reach. */
+  .square.is-target::after {
+    content: "";
+    position: absolute;
+    width: 28%;
+    height: 28%;
+    border-radius: 50%;
+    background: rgba(45, 90, 158, 0.55);
+  }
+   
+/*  A ring marks a square where the selected piece can capture. */
+.square.is-target.has-piece::after {
+    width: 92%;
+    height: 92%;
+    background: transparent;
+    border: 5px solid rgba(45, 90, 158, 0.65);
+}
+   
+/*  A king in check will glow red */
+.square.is-check::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(191, 58, 48, 0.9) 0%, rgba(191, 58, 48, 0) 70%);
+}
+   
+/*  Keyboard focus must always be visible. */
+.square:focus-visible {
+    outline: 3px solid var(--signal);
+    outline-offset: -3px;
+    z-index: 2;
+}
+
+/*  Pieces (pictures from assets/pieces) */
+  .piece {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: 88%;
+    height: 88%;
+    user-select: none;
+    pointer-events: none; /* clicks go to the square underneath */
+}
+   
+.piece img {
+    width: 100%;
+    height: 100%;
+}
+   
+/*  Small file letters and rank numbers on the edge squares */
+.coord {
+    position: absolute;
+    z-index: 1;
+    font-size: calc(var(--board-size) / 8 * 0.17);
+    font-weight: 600;
+    pointer-events: none;
+}
+   
+.coord-file {
+    right: 5%;
+    bottom: 2%;
+}
+   
+.coord-rank {
+    left: 6%;
+    top: 3%;
+}
+   
+.square.light .coord {
+    color: #4d6073;
+}
+   
+.square.dark .coord {
+    color: #eef2f5;
+}
+   
+/*  Textured board styles */
+.board[data-style] .square.light {
+    background-image: var(--tile-light);
+    background-size: cover;
+}
+   
+.board[data-style] .square.dark {
+    background-image: var(--tile-dark);
+    background-size: cover;
+}
+   
+/*  Labels need an outline to stay readable on top of a texture. */
+.board[data-style] .coord {
+    color: #fff;
+    text-shadow: 0 0 3px #000, 0 0 3px #000;
+}
+   
+/*  Black pieces get a faint light edge so they do not vanish on dark textures. */
+.board[data-style] .piece-black img {
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.9));
+}
+   
+  /* Promotion chooser */
+.promotion {
+    width: var(--board-size);
+    margin-top: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+}
+   
+.promotion[hidden] {
+    display: none;
+}
+   
+.promotion p {
+    margin: 0 0 0.5rem;
+    font-weight: 600;
+}
+   
+.promotion-choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+   
+/*  Side panel */
+.panel {
+    display: grid;
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 27rem;
+    padding: 1.25rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+}
+   
+.panel h2 {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+}
+   
+.status {
+    min-height: 3em;
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+   
+.status.is-error {
+    color: var(--alarm);
+}
+   
+.hint {
+    margin: 0 0 0.75rem;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+}
+   
+/*  Controls */
+.controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+   
+.controls .wide {
+    grid-column: 1 / -1;
+}
+   
+.controls label {
+    display: grid;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+}
+   
+select,
+button {
+    min-height: 2.5rem;
+    padding: 0.4rem 0.75rem;
+    font: inherit;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+}
+   
+button {
+    font-weight: 600;
+    cursor: pointer;
+    color: #fff;
+    background: var(--ink);
+    border-color: var(--ink);
+}
+   
+button:hover:not(:disabled) {
+    filter: brightness(1.15);
+}
+
+button:hover {
+    color:#2d5a9e
+}
+   
+select:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid var(--signal);
+    outline-offset: 2px;
+}
+   
+/* Engine readout */
+.readout dl {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+}
+   
+.readout dl > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--line);
+}
+   
+.readout dt {
+    color: var(--ink-soft);
+}
+   
+.readout dd {
+    margin: 0;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+   
+/*  Engine lab switches */
+.switch {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+   
+.switch input {
+    flex: none;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-top: 0.15rem;
+    accent-color: var(--signal);
+}
+   
+/*  Move list */
+.moves ol {
+    max-height: 11rem;
+    margin: 0;
+    padding-left: 2rem;
+    overflow-y: auto;
+    font-variant-numeric: tabular-nums;
+}
+   
+.moves li {
+    white-space: pre;
+}
+   
+/*  Footer */
+.site-footer {
+    max-width: 70ch;
+    margin: 0 auto;
+    padding: 0 1rem 2rem;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+    text-align: center;
+}
+   
+.site-footer a {
+    color: var(--signal);
+}
