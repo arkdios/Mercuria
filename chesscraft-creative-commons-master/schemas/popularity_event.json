@@ -1,0 +1,24 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  
+  "properties": {
+      "datetime":{
+          "type":"datetime"
+      },
+      "design_id": {
+          "type": "string"
+      },
+      "design_type": {
+        "type": "string"
+      },
+      "is_universal": {
+          "type": "boolean"
+      },
+      "route_key": {
+          "type": "string",
+          "enum": ["web", "api"]
+      }
+  },  
+  "required":["datetime","design_id","design_type","is_universal","route_key"],
+  "additionalProperties": false
+}

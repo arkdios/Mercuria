@@ -1,0 +1,27 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "parcel_type": {
+      "const": "move"
+    },
+    "move": {
+      "type": "object"
+    },
+    "move_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "clock_seconds": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 36000
+    }
+  },
+  "required": [
+    "parcel_type",
+    "move",
+    "move_index",
+    "clock_seconds"
+  ],
+  "type": "object"
+}

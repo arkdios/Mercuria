@@ -47,3 +47,6 @@ Mercuria/
 ## Credits  
    
 Chess pieces, the board, and some UI elements are free assets from the web.  
+Chess pieces' sprites used here originated from ChessCraft Creative Commons made by Stuart Spence.  
+Source/URL: https://gitlab.com/zulban/chesscraft-creative-commons  
+License: CC BY-SA 4.0  

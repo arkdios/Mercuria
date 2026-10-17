@@ -1,0 +1,20 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "servers": {
+      "type": "array",
+      "items": {
+         "type": "object"
+      }
+    },
+    "minimum_client_version": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "servers",
+    "minimum_client_version"
+  ],
+  "additionalProperties": false,
+  "type": "object"
+}

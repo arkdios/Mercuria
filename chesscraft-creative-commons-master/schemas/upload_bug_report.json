@@ -1,0 +1,42 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "text": {
+      "type": "string",
+      "maxLength": 5000000
+    },
+    "bug_type": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "client_language": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16
+    },
+    "client_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "client_platform": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "client_genuine_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    }
+  },
+  "required": [
+    "text",
+    "bug_type",
+    "client_genuine_id",
+    "client_language",
+    "client_platform",
+    "client_version"
+  ],
+  "type": "object"
+}

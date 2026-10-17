@@ -1,0 +1,22 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "parcel_type": {
+      "const": "offer_draw"
+    },
+    "move_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sender_player_index": {
+      "type": "integer",
+      "enum": [1, 2]
+    }
+  },
+  "required": [
+    "parcel_type",
+    "move_index",
+    "sender_player_index"
+  ],
+  "type": "object"
+}

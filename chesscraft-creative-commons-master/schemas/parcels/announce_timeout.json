@@ -1,0 +1,12 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "parcel_type": {
+      "const": "announce_timeout"
+    }
+  },
+  "required": [
+    "parcel_type"
+  ],
+  "type": "object"
+}

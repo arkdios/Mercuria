@@ -1,0 +1,100 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "movement": {
+      "type": "object"
+    },
+    "attack": {
+      "type": "object"
+    },
+    "children": {
+      "type": "array"
+    },
+    "content_rating": {
+      "type": "integer"
+    },
+    "design_type": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "is_anchor": {
+      "type": "boolean"
+    },
+    "is_angel": {
+      "type": "boolean"
+    },
+    "is_ahimsa": {
+      "type": "boolean"
+    },
+    "is_board": {
+      "type": "boolean"
+    },
+    "is_cannon_attacker": {
+      "type": "boolean"
+    },
+    "is_checkable": {
+      "type": "boolean"
+    },
+    "is_garb": {
+      "type": "boolean"
+    },
+    "is_medusa": {
+      "type": "boolean"
+    },
+    "is_peacekeeper": {
+      "type": "boolean"
+    },
+    "is_piece": {
+      "type": "boolean"
+    },
+    "is_ranged_attacker": {
+      "type": "boolean"
+    },
+    "is_trojan_horse": {
+      "type": "boolean"
+    },
+    "is_warden": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "allow_identify_in_play_modes",
+    "attack",
+    "author",
+    "can_attack",
+    "can_be_captured",
+    "can_move",
+    "can_first_advance3",
+    "can_first_advance4",
+    "castle_like_king",
+    "castle_like_rook",
+    "children",
+    "content_rating",
+    "creation_date",
+    "date_text",
+    "description",
+    "design_type",
+    "double_advance",
+    "is_anchor",
+    "is_angel",
+    "is_ahimsa",
+    "is_board",
+    "is_cannon_attacker",
+    "is_checkable",
+    "is_garb",
+    "is_medusa",
+    "is_peacekeeper",
+    "is_piece",
+    "is_ranged_attacker",
+    "is_trojan_horse",
+    "is_warden",
+    "movement",
+    "name",
+    "pawn_attack_en_passant",
+    "show_in_crafting_hub",
+    "sprite_label"
+  ],
+  "type": "object"
+}

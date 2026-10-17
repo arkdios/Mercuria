@@ -1,0 +1,52 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "parcel_type": {
+      "const": "settings_proposal"
+    },
+    "board_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "player1_color": {
+      "type": "string",
+      "enum": ["white","black","random","choice"]
+    },
+    "player1_start_seconds": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 36000
+    },
+    "player2_start_seconds": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 36000
+    },
+    "player1_increment_seconds": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 600
+    },
+    "player2_increment_seconds": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 600
+    },
+    "settings_id": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "parcel_type",
+    "board_id",
+    "player1_color",
+    "player1_start_seconds",
+    "player2_start_seconds",
+    "player1_increment_seconds",
+    "player2_increment_seconds",
+    "settings_id"
+  ],
+  "type": "object"
+}

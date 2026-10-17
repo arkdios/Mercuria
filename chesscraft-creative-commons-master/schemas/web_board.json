@@ -1,0 +1,120 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "allow_identify_in_play_modes": {
+      "type": "boolean"
+    },
+    "author": {
+      "type": "string"
+    },
+    "char_to_piece_id": {
+      "type": "object"
+    },
+    "children": {
+      "type": "array"
+    },
+    "client_language": {
+      "type": "string"
+    },
+    "client_version": {
+      "type": "string"
+    },
+    "content_rating": {
+      "type": "integer"
+    },
+    "creation_date": {
+      "type": "integer"
+    },
+    "date_text": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "design_type": {
+      "type": "string"
+    },
+    "dimensions": {
+      "type": "object"
+    },
+    "index_to_tile_rule": {
+      "type": "object"
+    },
+    "is_board": {
+      "type": "boolean"
+    },
+    "is_garb": {
+      "type": "boolean"
+    },
+    "is_maybe_broken": {
+      "type": "boolean"
+    },
+    "is_piece": {
+      "type": "boolean"
+    },
+    "is_universal": {
+      "type": "boolean"
+    },
+    "name": {
+      "type": "string"
+    },
+    "piece_id_to_sprite_urls": {
+      "type": "object"
+    },
+    "piece_ids": {
+      "type": "array"
+    },
+    "pieces": {
+      "type": "array"
+    },
+    "rules": {
+      "type": "object"
+    },
+    "show_in_crafting_hub": {
+      "type": "boolean"
+    },
+    "tile_rule_indexes_at": {
+      "type": "array"
+    },
+    "tiles": {
+      "type": "array"
+    },
+    "was_created_locally": {
+      "type": "boolean"
+    },
+    "was_randomly_generated": {
+      "type": "boolean"
+    },
+    "white_to_play": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "allow_identify_in_play_modes",
+    "author",
+    "char_to_piece_id",
+    "children",
+    "client_language",
+    "client_version",
+    "content_rating",
+    "creation_date",
+    "date_text",
+    "description",
+    "design_type",
+    "dimensions",
+    "index_to_tile_rule",
+    "is_board",
+    "is_garb",
+    "is_piece",
+    "name",
+    "piece_id_to_sprite_urls",
+    "piece_ids",
+    "pieces",
+    "rules",
+    "show_in_crafting_hub",
+    "tile_rule_indexes_at",
+    "tiles",
+    "white_to_play"
+  ],
+  "type": "object"
+}

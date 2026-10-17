@@ -1,0 +1,42 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "profile_id": {
+      "type": "string"
+    },
+    "data_string": {
+      "type": "string"
+    },
+    "client_language": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16
+    },
+    "client_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "client_platform": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "unix_seconds": {
+      "type": "integer"
+    },
+    "tracking_data": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "profile_id",
+    "data_string",
+    "client_language",
+    "client_platform",
+    "client_version",
+    "unix_seconds",
+    "tracking_data"
+  ],
+  "type": "object"
+}

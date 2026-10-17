@@ -1,0 +1,40 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "pieces": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "boards": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "garbs": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "checksum_to_url": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "is_success": {
+      "type": "boolean",
+      "value": true
+    },
+    "error_message": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "is_success"
+  ],
+  "type": "object"
+}

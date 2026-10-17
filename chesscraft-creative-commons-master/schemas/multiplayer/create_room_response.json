@@ -1,0 +1,20 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "room_id": {
+      "type": "string"
+    },
+    "room_result": {
+      "type": "string",
+      "enum": ["created","waitlist"]
+    },
+    "waitlist_number": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "room_result"
+  ],
+  "additionalProperties": false,
+  "type": "object"
+}

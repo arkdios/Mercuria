@@ -1,0 +1,39 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "design_id": {
+      "type": "string"
+    },
+    "report_reason_id": {
+      "type": "integer"
+    },
+    "report_reason_text": {
+      "type": "string"
+    },
+    "client_version": {
+      "type": "string"
+    },
+    "client_language": {
+      "type": "string"
+    },
+    "client_platform": {
+      "type": "string"
+    },
+    "client_genuine_id": {
+      "type": "string"
+    },
+    "client_steam_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "design_id",
+    "report_reason_id",
+    "report_reason_text",
+    "client_version",
+    "client_language",
+    "client_platform",
+    "client_genuine_id"
+  ],
+  "type": "object"
+}

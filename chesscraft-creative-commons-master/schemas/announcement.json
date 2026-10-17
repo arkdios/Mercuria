@@ -1,0 +1,40 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "announcement_id": {
+      "type": "integer"
+    },
+    "datestamp": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "unix_seconds_expire": {
+      "type": "integer"
+    },
+    "sprite_is_white": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "title",
+    "text",
+    "datestamp",
+    "announcement_id",
+    "language",
+    "image",
+    "unix_seconds_expire",
+    "sprite_is_white"
+  ],
+  "type": "object"
+}

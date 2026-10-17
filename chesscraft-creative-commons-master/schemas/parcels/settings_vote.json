@@ -1,0 +1,21 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "parcel_type": {
+      "const": "settings_vote"
+    },
+    "is_approved": {
+      "type": "boolean"
+    },
+    "settings_id": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "parcel_type",
+    "is_approved",
+    "settings_id"
+  ],
+  "type": "object"
+}

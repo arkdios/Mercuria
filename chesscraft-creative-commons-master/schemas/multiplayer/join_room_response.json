@@ -1,0 +1,25 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "room_result": {
+      "type": "string",
+      "enum": ["joined","no_exist","room_full","bad_version"]
+    },
+    "room_data": {
+      "type": "object"
+    },
+    "parcels": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "required": [
+    "room_result",
+    "room_data",
+    "parcels"
+  ],
+  "additionalProperties": false,
+  "type": "object"
+}

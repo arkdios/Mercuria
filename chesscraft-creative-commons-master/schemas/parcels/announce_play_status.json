@@ -1,0 +1,22 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "parcel_type": {
+      "const": "announce_play_status"
+    },
+    "sender_player_index": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2
+    },
+    "play_status": {
+      "type":"integer"
+    }
+  },
+  "required": [
+    "parcel_type",
+    "sender_player_index",
+    "play_status"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,30 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "server_id_to_client_id": {
+      "type": "object"
+    },
+    "client_ids":{
+      "type":"array",
+      "items":{"type":"string"}
+    },
+    "server_ids":{
+      "type":"array",
+      "items":{"type":"string"}
+    },
+    "s3_presigned_urls": {
+      "type":"array",
+      "items":{"type":"object"}
+    },
+    "is_success": {
+      "type": "boolean"
+    },
+    "error_message": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "is_success"
+  ],
+  "type": "object"
+}

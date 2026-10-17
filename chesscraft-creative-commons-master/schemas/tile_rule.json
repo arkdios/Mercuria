@@ -1,0 +1,33 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "is_hidden": {
+      "type": "boolean"
+    },
+    "applies_to_white": {
+      "type": "boolean"
+    },
+    "applies_to_black": {
+      "type": "boolean"
+    },
+    "png_basename1": {
+      "type": "string"
+    },
+    "png_basename2": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "piece_ids1",
+    "piece_ids2",
+    "integer1",
+    "point1",
+    "point2",
+    "applies_to_white",
+    "applies_to_black",
+    "is_hidden",
+    "png_basename1",
+    "png_basename2"
+  ],
+  "type": "object"
+}

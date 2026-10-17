@@ -1,0 +1,16 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "announcements": {
+      "type": "array",
+      "items": {
+         "type": "object"
+      }
+    }
+  },
+  "required": [
+    "announcements"
+  ],
+  "additionalProperties": false,
+  "type": "object"
+}

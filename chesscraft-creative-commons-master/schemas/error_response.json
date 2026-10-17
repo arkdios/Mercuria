@@ -1,0 +1,17 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "is_success": {
+      "type": "boolean",
+      "value": false
+    },
+    "error_message":{
+      "type":"string"
+    }
+  },
+  "required": [
+    "is_success",
+    "error_message"
+  ],
+  "type": "object"
+}

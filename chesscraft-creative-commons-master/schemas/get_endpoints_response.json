@@ -1,0 +1,32 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "url": {
+      "type": "string"
+    },
+    "is_upload_necessary": {
+      "type": "boolean"
+    },
+    "endpoints": {
+      "type":"object",
+      "additionalProperties":{"type":"object",
+               "required": ["url","fields","is_upload_necessary"],
+               "properties":{
+                "url":{"type":"string"},
+                "is_upload_necessary":{"type":"boolean"},
+                "fields":{"type":"object"}
+               }
+              }
+    },
+    "is_success": {
+      "type": "boolean"
+    },
+    "error_message": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "is_success"
+  ],
+  "type": "object"
+}

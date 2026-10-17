@@ -1,0 +1,43 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "boards": {
+      "type": "array"
+    },
+    "pieces": {
+      "type": "array"
+    },
+    "garbs": {
+      "type": "array"
+    },
+    "client_version": {
+      "type": "string"
+    },
+    "client_language": {
+      "type": "string"
+    },
+    "client_platform": {
+      "type": "string"
+    },
+    "client_genuine_id": {
+      "type": "string"
+    },
+    "client_steam_id": {
+      "type": "string"
+    },
+    "unix_seconds": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "boards",
+    "pieces",
+    "garbs",
+    "client_version",
+    "client_language",
+    "client_platform",
+    "client_genuine_id",
+    "unix_seconds"
+  ],
+  "type": "object"
+}

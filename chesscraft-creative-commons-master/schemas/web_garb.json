@@ -1,0 +1,45 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "design_type": {
+      "type": "string"
+    },
+    "children": {
+      "type": "array"
+    },
+    "content_rating": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "white_checksum": {
+      "type": "string"
+    },
+    "black_checksum": {
+      "type": "string"
+    },
+    "is_board": {
+      "type": "boolean"
+    },
+    "is_piece": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "author",
+    "children",
+    "content_rating",
+    "creation_date",
+    "date_text",
+    "description",
+    "design_type",
+    "is_board",
+    "is_piece",
+    "name",
+    "show_in_crafting_hub",
+    "white_checksum",
+    "black_checksum"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,19 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "parcels": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "opponent_heartbeat_seconds": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "parcels"
+  ],
+  "additionalProperties": false,
+  "type": "object"
+}

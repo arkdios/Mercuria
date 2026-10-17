@@ -1,0 +1,16 @@
+#!/bin/bash
+
+SCRIPT_FOLDER=$(realpath $(dirname "$0"))
+WIDTH_PIXELS=1025
+ROW_COUNT=6
+COLUMN_COUNT=12
+PROJECT_ROOT=$(dirname $(dirname $(realpath $0)))
+VENV=$($PROJECT_ROOT/src/print-venv-path.sh)
+
+if [[ ! -d $VENV ]] ; then
+    echo "Aborted. venv not setup: $VENV"
+    exit 1
+fi
+
+cd $PROJECT_ROOT
+$VENV/bin/python3 $PROJECT_ROOT/src/generate-previews.py "$@"

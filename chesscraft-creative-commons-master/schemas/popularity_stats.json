@@ -1,0 +1,126 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  
+  "properties": {
+      "board":{
+          "properties": {
+            "top-all-time": {
+              "type": "array"
+            },
+            "top-year": {
+              "type": "array"
+            },
+            "top-month": {
+              "type": "array"
+            },
+            "top-week": {
+              "type": "array"
+            },
+            "top-day": {
+              "type": "array"
+            },
+            "visit_counts_api":{
+                "type": "object"
+            },
+            "visit_counts_web":{
+                "type": "object"
+            },
+            "visit_counts_multiplayer":{
+                "type": "object"
+            },
+            "popularity_scores":{
+                "type": "object"
+            },
+            "design_ids": {
+                "type": "array"
+            }
+          },
+          "required": ["top-all-time","top-year","top-month","top-week","top-day","design_ids"],
+          "additionalProperties": false,
+          "type": "object"
+      },
+      "piece":{
+          "properties": {
+            "top-all-time": {
+              "type": "array"
+            },
+            "top-year": {
+              "type": "array"
+            },
+            "top-month": {
+              "type": "array"
+            },
+            "top-week": {
+              "type": "array"
+            },
+            "top-day": {
+              "type": "array"
+            },
+            "visit_counts_api":{
+                "type": "object"
+            },
+            "visit_counts_web":{
+                "type": "object"
+            },
+            "visit_counts_multiplayer":{
+                "type": "object"
+            },
+            "popularity_scores":{
+                "type": "object"
+            },
+            "design_ids": {
+                "type": "array"
+            }
+          },
+          "required": ["top-all-time","top-year","top-month","top-week","top-day","design_ids"],
+          "additionalProperties": false,
+          "type": "object"
+      },
+      "garb":{
+          "properties": {
+            "top-all-time": {
+              "type": "array"
+            },
+            "top-year": {
+              "type": "array"
+            },
+            "top-month": {
+              "type": "array"
+            },
+            "top-week": {
+              "type": "array"
+            },
+            "top-day": {
+              "type": "array"
+            },
+            "visit_counts_api":{
+                "type": "object"
+            },
+            "visit_counts_web":{
+                "type": "object"
+            },
+            "visit_counts_multiplayer":{
+                "type": "object"
+            },
+            "popularity_scores":{
+                "type": "object"
+            },
+            "design_ids": {
+                "type": "array"
+            }
+          },
+          "required": ["top-all-time","top-year","top-month","top-week","top-day","design_ids"],
+          "additionalProperties": false,
+          "type": "object"
+      },
+      "datestamp":{
+          "type":"string",
+          "pattern":"[0-9]{4}-[0-9]{2}-[0-9]{2}"
+      },
+      "design_ids": {
+          "type": "array"
+      }
+  },  
+  "required":["board","piece","garb","datestamp","design_ids"],
+  "additionalProperties": false
+}

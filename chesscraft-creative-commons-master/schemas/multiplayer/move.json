@@ -1,0 +1,44 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "x1": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 15
+    },
+    "y1": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 15
+    },
+    "x2": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 15
+    },
+    "y2": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 15
+    },
+    "promotion_choice": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 25
+    },
+    "move_type": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 32
+    }
+  },
+  "required": [
+    "x1",
+    "y1",
+    "x2",
+    "y2",
+    "move_type"
+  ],
+  "additionalProperties": false,
+  "type": "object"
+}

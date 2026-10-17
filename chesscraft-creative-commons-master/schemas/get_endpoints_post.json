@@ -1,0 +1,28 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "checksums": {
+      "type": "string"
+    },
+    "client_version": {
+      "type": "string"
+    },
+    "client_language": {
+      "type": "string"
+    },
+    "client_platform": {
+      "type": "string"
+    },
+    "client_genuine_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "checksums",
+    "client_version",
+    "client_language",
+    "client_platform",
+    "client_genuine_id"
+  ],
+  "type": "object"
+}

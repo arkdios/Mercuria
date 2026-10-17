@@ -1,0 +1,21 @@
+{
+    "_schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "host": {
+            "type": "string"
+        },
+        "is_healthy": {
+            "type": "boolean"
+        },
+        "room_prefix": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "host",
+        "is_healthy",
+        "room_prefix"
+    ],
+    "additionalProperties": false,
+    "type": "object"
+}

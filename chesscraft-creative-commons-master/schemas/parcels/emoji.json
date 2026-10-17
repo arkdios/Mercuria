@@ -1,0 +1,23 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "parcel_type": {
+      "const": "emoji"
+    },
+    "emoji_unicode": {
+      "type": "string",
+      "minimumLength": 1,
+      "maximumLength": 64
+    },
+    "sender_player_index": {
+      "type": "integer",
+      "enum": [1, 2]
+    }
+  },
+  "required": [
+    "parcel_type",
+    "emoji_unicode",
+    "sender_player_index"
+  ],
+  "type": "object"
+}

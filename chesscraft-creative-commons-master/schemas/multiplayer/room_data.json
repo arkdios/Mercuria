@@ -1,0 +1,27 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "player1": {
+      "type": "object"
+    },
+    "player2": {
+      "type": "object"
+    },
+    "room_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16
+    },
+    "settings_parcel": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "player1",
+    "player2",
+    "room_id",
+    "settings_parcel"
+  ],  
+  "additionalProperties": false,
+  "type": "object"
+}

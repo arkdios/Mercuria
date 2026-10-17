@@ -1,0 +1,14 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "parcel_type": {
+      "type": "string",
+      "enum": ["announce_draw", "announce_leave_room", "announce_play_status", "announce_start", "announce_timeout",
+      "emoji","move","offer_draw","settings_vote","settings_proposal"]
+    }
+  },
+  "required": [
+    "parcel_type"
+  ],
+  "type": "object"
+}

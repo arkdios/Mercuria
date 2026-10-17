@@ -1,0 +1,42 @@
+{
+  "_schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "player": {
+      "type": "object"
+    },
+    "room_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16
+    },
+    "client_genuine_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "client_language": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16
+    },
+    "client_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "client_platform": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    }
+  },
+  "required": [
+    "player",
+    "room_id",
+    "client_platform",
+    "client_genuine_id",
+    "client_version"
+  ],
+  "additionalProperties": false,
+  "type": "object"
+}
