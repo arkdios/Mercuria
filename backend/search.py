@@ -14,7 +14,7 @@ from config import (
 )
 from evaluation import evaluate
 from move_ordering import order_moves
-from movegen import generate_pseudo_legal_moves, in_check, last_move_left_king_in_check
+from movegen import generate_pseudo_legal_moves, last_move_left_king_in_check
 from transposition_table import (
     EXACT,
     LOWER,
@@ -163,11 +163,6 @@ class Searcher:
         if ply >= MAX_PLY:
             return evaluate(board)
 
-        side_in_check = in_check(board)
-
-        if side_in_check:
-            depth += 1 # check extension
-
         if depth <= 0:
             if self._options.quiescence:
                 return self._quiescence(alpha, beta, ply)
@@ -223,9 +218,6 @@ class Searcher:
                         self._record_killer(ply, move)
 
                     break
-
-        if legal_moves == 0:
-            return -MATE_SCORE + ply if side_in_check else 0
 
         if best_score <= original_alpha:
             flag = UPPER
