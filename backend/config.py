@@ -51,7 +51,7 @@ ALLOWED_ORIGINS = frozenset(
     origin.strip()
     for origin in os.environ.get(
         "MERCURIA_ALLOWED_ORIGINS",
-        "http://localhost:5500,http://127.0.0.1:5500,https://arkdios.github.io/Mercuria/",
+        "http://localhost:5500,http://127.0.0.1:5500,https://arkdios.github.io",
     ).split(",")
     if origin.strip()
 )
