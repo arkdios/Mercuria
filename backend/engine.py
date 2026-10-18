@@ -1,8 +1,8 @@
 # Purpose: Single entry point between the API and the chess code: replays a game, reports its status, and picks the bot's reply
 
-from board import Board, move_from_uci, move_to_uci, square_name, BLACK, WHITE
+from board import BISHOP, BLACK, KING, KNIGHT, WHITE, Board, move_to_uci, sq_to_name, uci_to_move
 from config import DEFAULT_THINK_MS, MAX_THINK_MS, MIN_THINK_MS, TT_MAX_ENTRIES
-from movegen import generate_legal_moves, in_check
+from movegen import generate_legal_moves
 from search import Searcher, SearchOptions
 from transposition_table import TranspositionTable
 
@@ -22,13 +22,25 @@ def board_from_moves(moves: list) -> Board:
     board = Board()
 
     for ply, text in enumerate(moves, start=1):
-        move = move_from_uci(text)
-
+        move = uci_to_move(text)
         if move not in generate_legal_moves(board):
             raise ValueError(f"illegal move {text!r} at half-move {ply}")
         
         board.make_move(move)
     return board
+
+# Purpose: Can neither side possibly deliver checkmate? True for bare kings, or one knight or bishop against a bare king.
+def has_insufficient_material(board: Board) -> bool:
+    minors = 0
+    for piece in board.squares:
+        kind = abs(piece)
+        if kind == 0 or kind == KING:
+            continue
+        if kind == KNIGHT or kind == BISHOP:
+            minors += 1
+        else:
+            return False
+    return minors <= 1
 
 # Purpose: Classify the position as ongoing, checkmate, stalemate, or a draw.
 # Args: board: The position.
@@ -36,12 +48,12 @@ def board_from_moves(moves: list) -> Board:
 # Returns: One of the STATUS_* constants.
 def game_status(board: Board, legal_moves: list) -> str:
     if not legal_moves:
-        return STATUS_CHECKMATE if in_check(board) else STATUS_STALEMATE
+        return STATUS_CHECKMATE if board.is_in_check() else STATUS_STALEMATE
     if board.repetition_count() >= 3:
         return STATUS_DRAW_REPETITION
-    if board.halfmove >= 100:
+    if board.half_move_clock >= 100:
         return STATUS_DRAW_FIFTY_MOVE
-    if board.is_insufficient_material():
+    if has_insufficient_material(board):
         return STATUS_DRAW_INSUFFICIENT
     return STATUS_ONGOING
 
@@ -50,18 +62,18 @@ def game_status(board: Board, legal_moves: list) -> str:
 def describe_position(board: Board) -> dict:
     legal_moves = generate_legal_moves(board)
     status = game_status(board, legal_moves)
-    checked = in_check(board)
+    checked = board.is_in_check()
     winner = None
 
     if status == STATUS_CHECKMATE:
-        winner = "w" if board.side == BLACK else "b"
+        winner = "w" if board.side_to_move == BLACK else "b"
 
     return {
         "fen": board.to_fen(),
-        "turn": "w" if board.side == WHITE else "b",
+        "turn": "w" if board.side_to_move == WHITE else "b",
         "legal_moves": [move_to_uci(m) for m in legal_moves],
         "in_check": checked,
-        "check_square": square_name(board.king_square(board.side)) if checked else None,
+        "check_square": sq_to_name(board.find_king(board.side_to_move)) if checked else None,
         "status": status,
         "winner": winner,
     }
