@@ -1,9 +1,8 @@
-# Purpose: Search promising moves first, allowing the alpha-beta pruning to cut trivial branches
-#           Alpha-beta pruning becomes more effective when strong moves are searched early,
-#           allowing the engine to skip branches that cannot affect the final decision.
-#           Captures are prioritized using the values of the attacking and captured pieces,
-#           while promotions receive a bonus for creating a more powerful piece. This does
-#           not determine which move is best; it simply helps the search find good moves sooner.
+# Purpose:  Search promising moves first, allowing alpha-beta pruning to cut trivial branches.
+#           The script assigns priority scores to moves based on tactical factors, such as
+#           captures and promotions, then sorts them from highest to lowest priority.
+#           It does not decide which move is best or perform the search itself; search.py
+#           uses the ordered moves to improve the efficiency of alpha-beta pruning.
 
 from board import (
     BISHOP,
@@ -41,7 +40,7 @@ def _get_captured_piece(board, move):
         and move.to_sq == board.en_passant_square
         and move.from_sq % 8 != move.to_sq % 8
     ):
-        captured_square = move.to_sq + 8 * (-board.side_to_move)
+        captured_square = move.to_sq + 8 * board.side_to_move
         captured_piece = board.squares[captured_square]
 
     return captured_piece
