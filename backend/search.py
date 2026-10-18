@@ -3,7 +3,7 @@
 import time
 from dataclasses import dataclass
 
-from board import Board, move_to, move_promotion
+from board import Board, Move
 from config import (
     INFINITY,
     MATE_SCORE,
@@ -201,7 +201,7 @@ class Searcher:
         best_score, best_move, legal_moves = -INFINITY, 0, 0
 
         for move in moves:
-            is_quiet = squares[move_to(move)] == 0 and not move_promotion(move)
+            is_quiet = squares[move.to_sq] == 0 and not move.promotion
             board.make_move(move)
 
             if last_move_left_king_in_check(board):
