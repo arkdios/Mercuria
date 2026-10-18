@@ -1,7 +1,7 @@
 /// Purpose: Handles communication with the Python backend
 
 const LOCAL_API_URL = "http://127.0.0.1:5000";
-/// const HOSTED_API_URL = "https://backend-name.onrender.com"; // TODO: replace after deploying
+const HOSTED_API_URL = "https://Mercuria.onrender.com";
 
 const runsLocally = ["localhost", "127.0.0.1"].includes(window.location.hostname);
 export const API_BASE_URL = runsLocally ? LOCAL_API_URL : HOSTED_API_URL;
