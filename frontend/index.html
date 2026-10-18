@@ -5,7 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mercuria: play a chess engine you can take apart</title>
+    <meta name="theme-color" content="#08141f">
+    <title>Mercuria: a chess bot born in three days</title>
     <link rel="stylesheet" href="style.css">
     <!-- type="module" lets main.js import api.js and board.js + waits for the page to load. -->
     <script type="module" src="main.js"></script>
@@ -46,12 +47,8 @@
                     </select>
                 </label>
 
-                <label>Thinking time
-                    <select id="think-time">
-                        <option value="500">Quick (0.5 s)</option>
-                        <option value="1500" selected>Standard (1.5 s)</option>
-                        <option value="4000">Deep (4 s)</option>
-                    </select>
+                <label>Thinking time (seconds)
+                    <input type="number" id="think-time" min="0.5" max="10" step="0.5" value="4" inputmode="decimal">
                 </label>
 
                 <label class="wide">Board style
@@ -74,7 +71,7 @@
         
             <section class="lab" aria-labelledby="lab-title">
                 <h2 id="lab-title">Engine lab</h2>
-                <p class="hint">Fewer positions searched in the same time means a smarter search.</p>
+                <p class="hint">Switch a trick off, make a move, and compare "Depth reached". In the same time, a smarter search looks further ahead.</p>
 
                 <label class="switch">
                     <input type="checkbox" id="feature-alpha-beta" checked>

@@ -1,51 +1,79 @@
 /*  Purpose: Control appearance + responsiveness of the website */
 
+/*  Theme: mercury. Liquid silver on deep cold blue. */
 :root {
-    --silver: #e7ebef; /* page background */
-    --panel: #f6f8fa; /* side panel background */
-    --ink: #16212b; /* main text and black pieces */
-    --ink-soft: #46566a; /* secondary text */
-    --line: #c3cdd6; /* thin borders */
-    --square-light: #dde4ea;
-    --square-dark: #7f95a8;
-    --signal: #2d5a9e; /* selection, move dots, keyboard focus */
-    --alarm: #bf3a30; /* check and errors */
-   
+    color-scheme: dark; /* makes menus, scrollbars and number boxes dark too */
+    
+    --depth: #08141f; /* page background */
+    --depth-glow: #15385a; /* lighter pools of blue on the page background */
+    --panel: #0f2133; /* side panel background */
+    --panel-raised: #15293f; /* boxes inside the panel */
+    --panel-edge: #2f4b67; /* panel and box borders */
+    --line: #243d56; /* thin dividing lines */
+    --text: #e8f2fa; /* main text */
+    --text-soft: #9db5ca; /* secondary text */
+    --metal-light: #f4faff; /* the three silver shades used for the title */
+    --metal-mid: #a8c1d8;
+    --metal-dark: #54738f;
+    --accent: #6fd0f5; /* mercury cyan: buttons, focus, links */
+    --accent-strong: #3fa0d4;
+    --accent-ink: #06131d; /* text on top of the accent colour */
+    --square-light: #c9d9e8;
+    --square-dark: #4f7090;
+    --alarm: #ff7a6b; /* check and errors */
     --board-size: min(94vw, 78vh, 640px);
     --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
     --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
-   
+    
 * {
     box-sizing: border-box;
 }
-   
+    
 body {
+    min-height: 100vh;
     margin: 0;
-    background: var(--silver);
-    color: var(--ink);
+    /*  Two pools of lighter blue on a deep base, like light moving on liquid metal. */
+    background:
+        radial-gradient(1100px 520px at 12% -8%, var(--depth-glow) 0%, transparent 62%),
+        radial-gradient(900px 480px at 100% 0%, #10304d 0%, transparent 58%),
+        var(--depth);
+    background-attachment: fixed;
+    color: var(--text);
     font-family: var(--font-ui);
     line-height: 1.45;
 }
-   
+    
 /*  Header */
 .site-header {
     padding: 1.25rem clamp(1rem, 4vw, 3rem) 0;
 }
-   
+    
+/*  The title is filled with a silver gradient. */
 .site-header h1 {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+    font-size: clamp(2.2rem, 1.6rem + 2.4vw, 3.4rem);
     font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--metal-light);
 }
-   
+    
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .site-header h1 {
+        background: linear-gradient(180deg, var(--metal-light) 0%, var(--metal-mid) 46%, var(--metal-dark) 52%, var(--metal-light) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+}
+    
 .site-header p {
     max-width: 60ch;
     margin: 0.25rem 0 0;
-    color: var(--ink-soft);
+    color: var(--text-soft);
 }
-   
+    
 /*  Page layout */
 .game {
     display: grid;
@@ -54,7 +82,7 @@ body {
     gap: clamp(1rem, 3vw, 2.5rem);
     padding: clamp(1rem, 3vw, 2.5rem);
 }
-   
+    
 @media (min-width: 960px) {
     .game {
         grid-template-columns: auto minmax(20rem, 27rem);
@@ -62,8 +90,8 @@ body {
         align-items: start;
     }
 }
-   
-/* The board */
+    
+/*  The board */
 .board {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
@@ -72,9 +100,14 @@ body {
     height: var(--board-size);
     border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 0 0 2px var(--ink), 0 12px 32px rgba(52, 113, 170, 0.18);
+    /*  A silver edge with dark rim and deep shadow. It glows in cyan */
+    box-shadow:
+        0 0 0 2px var(--metal-dark),
+        0 0 0 7px #0d1d2d,
+        0 24px 60px rgba(0, 0, 0, 0.55),
+        0 0 90px rgba(111, 208, 245, 0.1);
 }
-   
+    
 .square {
     position: relative;
     display: flex;
@@ -88,73 +121,75 @@ body {
     background: var(--square-light);
     transition: background-color 0.15s;
 }
-   
+    
 .square.dark {
     background: var(--square-dark);
 }
-   
-/*  The previous move is tinted amber. */
+    
+/*  The previous move is tinted icy cyan. */
 .square.is-last::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(228, 181, 63, 0.55);
+    background: rgba(111, 208, 245, 0.45);
 }
-   
-/*  The selected piece gets a blue frame. */
+    
+/*  The selected piece gets a two-tone frame (navy inside, pale outside), so it shows on light and dark squares. */
 .square.is-selected {
-    box-shadow: inset 0 0 0 4px var(--signal);
+    box-shadow: inset 0 0 0 3px #0b3a63, inset 0 0 0 6px #bfeaff;
 }
-   
+    
 /*  A dot marks an empty square the selected piece can reach. */
-  .square.is-target::after {
+.square.is-target::after {
     content: "";
     position: absolute;
     width: 28%;
     height: 28%;
     border-radius: 50%;
-    background: rgba(45, 90, 158, 0.55);
-  }
-   
+    background: rgba(8, 28, 48, 0.6);
+    box-shadow: 0 0 0 2px rgba(232, 242, 250, 0.45);
+}
+    
 /*  A ring marks a square where the selected piece can capture. */
 .square.is-target.has-piece::after {
     width: 92%;
     height: 92%;
     background: transparent;
-    border: 5px solid rgba(45, 90, 158, 0.65);
+    border: 5px solid rgba(8, 28, 48, 0.65);
+    box-shadow: 0 0 0 2px rgba(232, 242, 250, 0.4);
 }
-   
+    
 /*  A king in check will glow red */
 .square.is-check::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle, rgba(191, 58, 48, 0.9) 0%, rgba(191, 58, 48, 0) 70%);
+    background: radial-gradient(circle, rgba(235, 70, 55, 0.95) 0%, rgba(235, 70, 55, 0) 70%);
 }
-   
+    
 /*  Keyboard focus must always be visible. */
 .square:focus-visible {
-    outline: 3px solid var(--signal);
+    outline: 3px solid var(--accent);
     outline-offset: -3px;
     z-index: 2;
 }
-
+    
 /*  Pieces (pictures from assets/pieces) */
-  .piece {
+.piece {
     position: relative;
     z-index: 1;
     display: flex;
     width: 88%;
     height: 88%;
     user-select: none;
-    pointer-events: none; /* clicks go to the square underneath */
+    pointer-events: none; /*    clicks go to the square underneath */
 }
-   
+    
 .piece img {
     width: 100%;
     height: 100%;
 }
-   
+    
 /*  Small file letters and rank numbers on the edge squares */
 .coord {
     position: absolute;
@@ -163,72 +198,72 @@ body {
     font-weight: 600;
     pointer-events: none;
 }
-   
+    
 .coord-file {
     right: 5%;
     bottom: 2%;
 }
-   
+    
 .coord-rank {
     left: 6%;
     top: 3%;
 }
-   
+    
 .square.light .coord {
-    color: #4d6073;
+    color: #3a5775;
 }
-   
+    
 .square.dark .coord {
-    color: #eef2f5;
+    color: var(--metal-light);
 }
-   
+    
 /*  Textured board styles */
 .board[data-style] .square.light {
     background-image: var(--tile-light);
     background-size: cover;
 }
-   
+    
 .board[data-style] .square.dark {
     background-image: var(--tile-dark);
     background-size: cover;
 }
-   
+    
 /*  Labels need an outline to stay readable on top of a texture. */
 .board[data-style] .coord {
     color: #fff;
     text-shadow: 0 0 3px #000, 0 0 3px #000;
 }
-   
+    
 /*  Black pieces get a faint light edge so they do not vanish on dark textures. */
 .board[data-style] .piece-black img {
     filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.9));
 }
-   
-  /* Promotion chooser */
+    
+/*  Promotion chooser */
 .promotion {
     width: var(--board-size);
     margin-top: 0.75rem;
     padding: 0.75rem 1rem;
     background: var(--panel);
-    border: 1px solid var(--line);
+    border: 1px solid var(--panel-edge);
     border-radius: 6px;
 }
-   
+    
 .promotion[hidden] {
     display: none;
 }
-   
+    
 .promotion p {
     margin: 0 0 0.5rem;
     font-weight: 600;
 }
-   
+    
 .promotion-choices {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
 }
-   
+    
 /*  Side panel */
 .panel {
     display: grid;
@@ -236,93 +271,110 @@ body {
     width: 100%;
     max-width: 27rem;
     padding: 1.25rem;
-    background: var(--panel);
-    border: 1px solid var(--line);
+    background: linear-gradient(180deg, #14293f 0%, var(--panel) 38%);
+    border: 1px solid var(--panel-edge);
     border-radius: 8px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
-   
+    
 .panel h2 {
     margin: 0 0 0.5rem;
     font-family: var(--font-display);
     font-size: 1.15rem;
+    letter-spacing: 0.03em;
+    color: var(--metal-mid);
 }
-   
+    
 .status {
     min-height: 3em;
     margin: 0;
     font-size: 1.1rem;
     font-weight: 600;
 }
-   
+    
 .status.is-error {
     color: var(--alarm);
 }
-   
+    
 .hint {
     margin: 0 0 0.75rem;
-    color: var(--ink-soft);
+    color: var(--text-soft);
     font-size: 0.92rem;
 }
-   
+    
 /*  Controls */
 .controls {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.75rem;
 }
-   
+    
 .controls .wide {
     grid-column: 1 / -1;
 }
-   
+    
 .controls label {
     display: grid;
     gap: 0.25rem;
     font-size: 0.9rem;
-    color: var(--ink-soft);
+    color: var(--text-soft);
 }
-   
+    
+/*  Menus and the thinking-time box are dark glass with a silver edge. */
 select,
+input[type="number"] {
+    min-height: 2.5rem;
+    padding: 0.4rem 0.75rem;
+    font: inherit;
+    color: var(--text);
+    background: var(--panel-raised);
+    border: 1px solid var(--panel-edge);
+    border-radius: 6px;
+}
+    
+/*  Buttons are polished metal. */
 button {
     min-height: 2.5rem;
     padding: 0.4rem 0.75rem;
     font: inherit;
-    color: var(--ink);
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-}
-   
-button {
     font-weight: 600;
     cursor: pointer;
-    color: #fff;
-    background: var(--ink);
-    border-color: var(--ink);
+    color: var(--accent-ink);
+    background: linear-gradient(180deg, #c4ecfc 0%, var(--accent) 52%, var(--accent-strong) 100%);
+    border: 1px solid #8fdcf8;
+    border-radius: 6px;
 }
-   
+    
+/* The Cancel button is a quiet outline so it does not compete with the real choices. */
+button.secondary {
+    color: var(--text);
+    background: transparent;
+    border-color: var(--panel-edge);
+}
+    
 button:hover:not(:disabled) {
-    filter: brightness(1.15);
+    filter: brightness(1.12);
 }
-
-button:hover {
-    color:#2d5a9e
+    
+button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
 }
-   
+    
 select:focus-visible,
 button:focus-visible,
 input:focus-visible {
-    outline: 3px solid var(--signal);
+    outline: 3px solid var(--accent);
     outline-offset: 2px;
 }
-   
+    
 /* Engine readout */
 .readout dl {
     display: grid;
     gap: 0.35rem;
     margin: 0;
 }
-   
+    
 .readout dl > div {
     display: flex;
     justify-content: space-between;
@@ -330,18 +382,18 @@ input:focus-visible {
     padding-bottom: 0.35rem;
     border-bottom: 1px solid var(--line);
 }
-   
+    
 .readout dt {
-    color: var(--ink-soft);
+    color: var(--text-soft);
 }
-   
+    
 .readout dd {
     margin: 0;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
     text-align: right;
 }
-   
+    
 /*  Engine lab switches */
 .switch {
     display: flex;
@@ -351,15 +403,15 @@ input:focus-visible {
     font-size: 0.95rem;
     cursor: pointer;
 }
-   
+    
 .switch input {
     flex: none;
     width: 1.2rem;
     height: 1.2rem;
     margin-top: 0.15rem;
-    accent-color: var(--signal);
+    accent-color: var(--accent);
 }
-   
+    
 /*  Move list */
 .moves ol {
     max-height: 11rem;
@@ -368,21 +420,33 @@ input:focus-visible {
     overflow-y: auto;
     font-variant-numeric: tabular-nums;
 }
-   
+    
 .moves li {
     white-space: pre;
 }
-   
+    
+.moves li::marker {
+    color: var(--text-soft);
+}
+    
 /*  Footer */
 .site-footer {
     max-width: 70ch;
     margin: 0 auto;
     padding: 0 1rem 2rem;
-    color: var(--ink-soft);
+    color: var(--text-soft);
     font-size: 0.85rem;
     text-align: center;
 }
-   
+    
 .site-footer a {
-    color: var(--signal);
+    color: var(--accent);
+}
+    
+/*  People who ask their device for less motion get none. */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
 }
