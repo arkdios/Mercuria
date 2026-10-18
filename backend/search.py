@@ -120,7 +120,7 @@ class Searcher:
         if not self._options.move_ordering:
             return moves
         
-        return order_moves(self._board, moves, table_move, killers)
+        return order_moves(self._board, moves)
 
     # Purpose: Search every legal move at the root to ``depth`` and pick the best.
     def _search_root(self, depth: int, previous_best: int) -> tuple:

@@ -1,7 +1,7 @@
 # Purpose: Single entry point between the API and the chess code: replays a game, reports its status, and picks the bot's reply
 
 from board import BISHOP, BLACK, KING, KNIGHT, WHITE, Board, move_to_uci, sq_to_name, uci_to_move
-from config import DEFAULT_THINK_MS, MAX_THINK_MS, MIN_THINK_MS, TT_MAX_ENTRIES
+from config import DEFAULT_THINK_MS, MAX_THINK_MS, MIN_THINK_MS, TT_MAX_ENTRIES, MAX_DEPTH
 from movegen import generate_legal_moves
 from search import Searcher, SearchOptions
 from transposition_table import TranspositionTable
@@ -102,7 +102,7 @@ class Engine:
             raise ValueError("the game is already over")
 
         think_ms = max(MIN_THINK_MS, min(MAX_THINK_MS, think_ms))
-        result = Searcher(self._table).search(board, think_ms, options=options)
+        result = Searcher(self._table).search(board, think_ms, MAX_DEPTH, options=options)
         board.make_move(result.move)
 
         return {
