@@ -1,6 +1,6 @@
 /// Purpose: Handles communication with the Python backend
 
-const LOCAL_API_URL = "http://127.0.0.1:5000";
+const LOCAL_API_URL = "http://127.0.0.1:5500";
 const HOSTED_API_URL = "https://mercuria-4td9.onrender.com/";
 
 const runsLocally = ["localhost", "127.0.0.1"].includes(window.location.hostname);
