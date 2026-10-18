@@ -28,6 +28,8 @@ _PIECE_VALUES = {
 # Priority bonuses encourage tactically important moves to be searched first.
 _PROMOTION_BONUS = 8_000
 _CAPTURE_BONUS = 10_000
+_KILLER_BONUS = 5_000          # below captures (10_000+) and promotions (8_000+)
+_TABLE_MOVE_BONUS = 1_000_000  # the remembered best move always goes first
 
 
 # Purpose: Return the piece captured by a move, or 0 if the move is not a capture.
@@ -47,7 +49,10 @@ def _get_captured_piece(board, move):
 
 
 # Purpose: Assign a priority score to a move for search ordering.
-def _score_move(board, move):
+def _score_move(board, move, table_move=None, killers=()):
+    if move == table_move:
+        return _TABLE_MOVE_BONUS
+
     moving_piece = abs(board.squares[move.from_sq])
     captured_piece = _get_captured_piece(board, move)
     score = 0
@@ -63,13 +68,17 @@ def _score_move(board, move):
     if move.promotion:
         score += _PROMOTION_BONUS + _PIECE_VALUES[abs(move.promotion)]
 
+    # Quiet killer moves rank below every capture but above the other quiet moves.
+    elif move in killers:
+        score += _KILLER_BONUS
+
     return score
 
 
 # Purpose: Return moves ordered from highest to lowest priority.
-def order_moves(board, moves):
+def order_moves(board, moves, table_move=None, killers=()):
     return sorted(
         moves,
-        key=lambda move: _score_move(board, move),
+        key=lambda move: _score_move(board, move, table_move, killers),
         reverse=True,
     )
