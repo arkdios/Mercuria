@@ -7,11 +7,11 @@ from flask import Flask, jsonify, request
 from werkzeug.exceptions import HTTPException
 
 from config import ALLOWED_ORIGINS, DEFAULT_THINK_MS, MAX_MOVES_PER_REQUEST
-# from engine import Engine
+from engine import Engine
 from search import SearchOptions
 
 app = Flask(__name__)
-# engine = Engine()
+engine = Engine()
 
 # A UCI move: two squares, then an optional promotion letter.
 _UCI_PATTERN = re.compile(r"^[a-h][1-8][a-h][1-8][qrbn]?$")
@@ -91,7 +91,7 @@ def read_options(body: dict) -> SearchOptions:
 def health():
     return jsonify({"status": "ok"})
 
-"""
+
 # Purpose: Describe the position reached by the given moves.
 @app.post("/api/position")
 def position():
@@ -116,7 +116,7 @@ def bot_move():
 
     except ValueError as error:
         raise InvalidRequest(str(error)) from error
-"""
+
 # Error handling
 # Purpose: Return a client mistake as JSON with status 400.
 @app.errorhandler(InvalidRequest)
