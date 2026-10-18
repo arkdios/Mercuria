@@ -5,26 +5,6 @@
 #           up to date, so the engine can spot repeated positions and use the transposition
 #           table. Other modules (movegen, search, evaluation, the API) read from this class
 #           or ask it to change. It does NOT generate moves, score positions, or search.
-#
-# Conventions (these match zobrist.py; every other backend file should use the same ones):
-#
-#   Pieces        Signed ints. PAWN=1 KNIGHT=2 BISHOP=3 ROOK=4 QUEEN=5 KING=6.
-#                 White pieces are positive, Black pieces are negative, 0 is an empty square.
-#                 So a black rook is -4 and abs(piece) is always the piece type.
-#   Squares       Flat list of 64, numbered from a8:  0 = a8, 7 = h8, 56 = a1, 63 = h1.
-#                 row = sq // 8 (row 0 is rank 8), col = sq % 8 (col 0 is the a-file).
-#                 This is the order FEN lists the board in. White pawns move toward
-#                 LOWER indexes (-8 per step), Black pawns toward HIGHER indexes (+8).
-#   Side          WHITE = 1, BLACK = -1. "-side" is always the opponent.
-#   Castling      Bitmask 0..15: WHITE_KINGSIDE=1, WHITE_QUEENSIDE=2,
-#                 BLACK_KINGSIDE=4, BLACK_QUEENSIDE=8.
-#   En passant    The target square index (the square the pawn skipped over), or -1 for none.
-#   Moves         Move(from_sq, to_sq, promotion). promotion is 0 for every move except a
-#                 pawn promotion, where it is the piece TYPE (KNIGHT..QUEEN, always
-#                 positive; the board applies the mover's colour). Castling is a king move
-#                 of two squares and en passant is a pawn capture onto the en passant
-#                 square; make_move detects both, so moves carry no special flags.
-
 from collections import namedtuple
 
 from zobrist import (
