@@ -2,6 +2,7 @@
 
 import time
 from dataclasses import dataclass
+from typing import Optional
 
 from board import Board, Move
 from config import (
@@ -39,7 +40,7 @@ class SearchOptions:
 # Purpose: What a finished search reports.
 @dataclass(frozen=True)
 class SearchResult:
-    move: int
+    move: Optional[Move]   # None only when the position has no legal move
     score: int
     depth: int
     nodes: int
@@ -54,7 +55,7 @@ class Searcher:
         self._board = None
         self._deadline = 0.0
         self._nodes = 0
-        self._killers = [[0, 0] for _ in range(MAX_PLY + 1)]
+        self._killers = [[None, None] for _ in range(MAX_PLY + 1)]
 
     # Public entry point
 
@@ -74,7 +75,7 @@ class Searcher:
         self._deadline = started + budget
         undo_depth = len(board.history)
 
-        best_move, best_score, reached_depth = 0, 0, 0
+        best_move, best_score, reached_depth = None, 0, 0
         last_pass_seconds = 0.0
         try:
             for depth in range(1, max_depth + 1):
@@ -96,7 +97,7 @@ class Searcher:
             while len(board.history) > undo_depth:
                 board.unmake_move()
 
-        if best_move == 0:
+        if best_move is None:
             best_move = self._first_legal_move()
 
         return SearchResult(
@@ -116,17 +117,17 @@ class Searcher:
             raise SearchTimeout
 
     # Purpose: Sort moves best-first, unless move ordering is switched off.
-    def _sort_moves(self, moves: list, table_move: int = 0, killers: tuple = (0, 0)) -> list:
+    def _sort_moves(self, moves: list, table_move=None, killers: tuple = (None, None)) -> list:
         if not self._options.move_ordering:
             return moves
         
         return order_moves(self._board, moves, table_move, killers)
 
     # Purpose: Search every legal move at the root to ``depth`` and pick the best.
-    def _search_root(self, depth: int, previous_best: int) -> tuple:
+    def _search_root(self, depth: int, previous_best) -> tuple:
         board = self._board
         moves = self._sort_moves(generate_pseudo_legal_moves(board), previous_best, tuple(self._killers[0]))
-        alpha, best_score, best_move = -INFINITY, -INFINITY, 0
+        alpha, best_score, best_move = -INFINITY, -INFINITY, None
 
         for move in moves:
             board.make_move(move)
@@ -144,8 +145,8 @@ class Searcher:
                 if self._options.alpha_beta:
                     alpha = max(alpha, score)
 
-        if best_move == 0:
-            return 0, 0
+        if best_move is None:
+            return None, 0
         
         return best_move, best_score
 
@@ -154,14 +155,19 @@ class Searcher:
         self._check_clock()
         board = self._board
 
-        if board.halfmove >= 100:
+        if board.half_move_clock >= 100:
             return 0
         
-        if board.halfmove >= 4 and board.repetition_count() >= 2:
+        if board.half_move_clock >= 4 and board.repetition_count() >= 2:
             return 0
         
         if ply >= MAX_PLY:
             return evaluate(board)
+
+        side_in_check = board.is_in_check()
+
+        if side_in_check:
+            depth += 1 # check extension
 
         if depth <= 0:
             if self._options.quiescence:
@@ -170,7 +176,7 @@ class Searcher:
             return evaluate(board)
 
         original_alpha = alpha
-        table_move = 0
+        table_move = None
         entry = self._table.probe(board.hash) if self._options.transposition_table else None
 
         if entry is not None:
@@ -193,7 +199,7 @@ class Searcher:
 
         moves = self._sort_moves(generate_pseudo_legal_moves(board), table_move, tuple(self._killers[ply]))
         squares = board.squares
-        best_score, best_move, legal_moves = -INFINITY, 0, 0
+        best_score, best_move, legal_moves = -INFINITY, None, 0
 
         for move in moves:
             is_quiet = squares[move.to_sq] == 0 and not move.promotion
@@ -218,6 +224,9 @@ class Searcher:
                         self._record_killer(ply, move)
 
                     break
+
+        if legal_moves == 0:
+            return -MATE_SCORE + ply if side_in_check else 0
 
         if best_score <= original_alpha:
             flag = UPPER
@@ -265,7 +274,7 @@ class Searcher:
         return alpha
 
     # Purpose: Return the first legal move found, or 0 if the position has none.
-    def _first_legal_move(self) -> int:
+    def _first_legal_move(self):
         board = self._board
 
         for move in generate_pseudo_legal_moves(board):
@@ -276,10 +285,10 @@ class Searcher:
             if not illegal:
                 return move
             
-        return 0
+        return None
 
     # Purpose: Remember a quiet move that caused a cutoff at this ply.
-    def _record_killer(self, ply: int, move: int) -> None:
+    def _record_killer(self, ply: int, move) -> None:
         slots = self._killers[ply]
         
         if slots[0] != move:
